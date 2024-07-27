@@ -7,6 +7,10 @@ import { PassportModule } from '@nestjs/passport';
 import { OwnStrategy } from 'src/own.strategy';
 import { OwnAuthGuard } from 'src/guards/own-auth.guard';
 
+const {
+  JWT_SECRET,
+} = process.env;
+
 @Module({
   controllers: [AuthController],
   providers: [AuthService, OwnStrategy, OwnAuthGuard],
@@ -14,7 +18,7 @@ import { OwnAuthGuard } from 'src/guards/own-auth.guard';
     forwardRef(() => UsersModule),
     PassportModule,
     JwtModule.register({
-      secret: process.env.PRIVATE_KEY || 'super-secret',
+      secret: JWT_SECRET|| 'super-secret',
       signOptions: { expiresIn: '7d' },
     }),
   ],

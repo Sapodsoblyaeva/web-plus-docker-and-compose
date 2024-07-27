@@ -1,0 +1,57 @@
+services:
+  backend:
+    container_name: backend-kpd
+    restart: always
+    image: backend-kpd-opti
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    env_file:
+      - .env.deploy
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  frontend:
+    container_name: frontend-kpd
+    restart: always
+    image: frontend-kpd-opti
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+    - "${FRONTEND_PORT}:${NGINX_PORT}"
+    networks:
+      - frontend
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - "${ADMINER_PORT}:8080"
+    networks:
+      - backend
+
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres:12
+    env_file:
+      - .env
+    volumes:
+      - pg_data:${POSTGRES_DATA}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    networks:
+      - backend
+
+volumes:
+  pg_data:
+
+networks:
+  frontend:
+  backend:

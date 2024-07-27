@@ -31,6 +31,14 @@ export class UsersService {
     return await this.userRepository.findOne({ where: query });
   }
 
+  async findUserForValidation(query) {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where(query)
+      .getOne();
+  }
+
   async findByUserName(username) {
     const user = await this.findOne(username);
     const profileInfo = {

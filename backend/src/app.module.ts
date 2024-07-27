@@ -13,11 +13,11 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 
 const {
-  DATABASE_URL,
-  DATABASE_PORT,
-  DATABASE_NAME,
-  DATABASE_USER,
-  DATABASE_USER_PASSWORD,
+  POSTGRES_HOST,
+  POSTGRES_DB,
+  POSTGRES_PORT,
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
 } = process.env;
 
 @Module({
@@ -27,11 +27,11 @@ const {
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: DATABASE_URL || 'localhost',
-      port: parseInt(DATABASE_PORT) || 5432,
-      username: DATABASE_USER || 'student',
-      password: DATABASE_USER_PASSWORD || 'student',
-      database: DATABASE_NAME || 'nest',
+      host: POSTGRES_HOST|| 'localhost',
+      port: parseInt(POSTGRES_PORT) || 5432,
+      username: POSTGRES_USER|| 'student',
+      password: POSTGRES_PASSWORD || 'student',
+      database: POSTGRES_DB || 'nest',
       autoLoadEntities: true,
       synchronize: true,
     }),
