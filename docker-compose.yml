@@ -9,7 +9,7 @@ services:
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     env_file:
-      - .env.deploy
+      - .env
     depends_on:
       - postgres
     networks:
@@ -26,15 +26,6 @@ services:
     - "${FRONTEND_PORT}:${NGINX_PORT}"
     networks:
       - frontend
-
-  adminer:
-    container_name: adminer
-    image: adminer
-    restart: always
-    ports:
-      - "${ADMINER_PORT}:8080"
-    networks:
-      - backend
 
   postgres:
     container_name: postgres

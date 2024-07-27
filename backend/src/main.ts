@@ -4,10 +4,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const PORT = process.env.PORT || 4000;
+  const PORT = process.env.BACKEND_PORT || 4000;
 
   app.enableCors({
-    origin: 'http://localhost:8081',
+    origin: 'https://kpd-sa.nomorepartiesco.ru',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
